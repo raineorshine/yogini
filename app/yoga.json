@@ -1,0 +1,46 @@
+{
+  "prompts": [
+    {
+      "type": "text",
+      "name": "project",
+      "message": "project name"
+    },
+    {
+      "type": "text",
+      "name": "description",
+      "message": "project description"
+    },
+    {
+      "type": "text",
+      "name": "username",
+      "message": "github username",
+      "store": true
+    },
+    {
+      "type": "text",
+      "name": "keywords",
+      "message": "keywords (comma-separated)"
+    },
+    {
+      "type": "confirm",
+      "name": "js",
+      "message": "Javascript?",
+      "default": false,
+      "store": true
+    },
+    {
+      "type": "confirm",
+      "name": "cli",
+      "message": "Is this a command line application?",
+      "default": false,
+      "store": true
+    }
+  ],
+  "dependencies": [
+    "express"
+  ],
+  "devDependencies": [
+    "mocha",
+    "chai"
+  ]
+}
