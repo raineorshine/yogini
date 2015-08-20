@@ -1,0 +1,22 @@
+{
+  "name": "generator-yoga",
+  "version": "0.0.0",
+  "description": "Simple, declarative scaffolding built on yeoman",
+  "license": "ISC",
+  "repository": "metaraine/generator-yoga",
+  "author": {
+    "name": "Raine Lourie",
+    "url": "https://github.com/metaraine"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "keywords": [
+    "scaffolding",
+    "scaffold",
+    "yeoman",
+    "generator",
+    "yeoman-generator",
+    "app"
+  ]
+}
