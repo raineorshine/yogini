@@ -1,7 +1,7 @@
 {
   "name": "generator-yoga",
   "version": "0.0.0",
-  "description": "Simple, declarative scaffolding built on yeoman",
+  "description": "Code-less personal scaffolding.",
   "license": "ISC",
   "repository": "metaraine/generator-yoga",
   "author": {
