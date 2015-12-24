@@ -22,6 +22,7 @@ function prettyKeywords(keywords) {
 }
 
 module.exports = generators.Base.extend({
+
   constructor: function () {
 
     generators.Base.apply(this, arguments)
@@ -65,6 +66,10 @@ module.exports = generators.Base.extend({
       }.bind(this))
       .on('end', done)
       .on('error', done)
+  },
+
+  end: function () {
+    this.installDependencies()
   }
 
 })

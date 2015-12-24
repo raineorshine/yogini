@@ -35,12 +35,5 @@
       "default": false,
       "store": true
     }
-  ],
-  "dependencies": [
-    "express"
-  ],
-  "devDependencies": [
-    "mocha",
-    "chai"
   ]
 }
