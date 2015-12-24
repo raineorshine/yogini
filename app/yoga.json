@@ -22,6 +22,19 @@
       "message": "keywords (comma-separated)"
     },
     {
+      "type": "text",
+      "name": "repo",
+      "message": "repository",
+      "store": true
+    },
+    {
+      "type": "text",
+      "name": "license",
+      "message": "license",
+      "default": "ISC",
+      "store": true
+    },
+    {
       "type": "confirm",
       "name": "js",
       "message": "Javascript?",

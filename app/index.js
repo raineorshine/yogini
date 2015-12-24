@@ -44,9 +44,11 @@ module.exports = generators.Base.extend({
       // assign each prop to the generator instance for use in templating
       extend(this, props)
       this.props = props
-      if(this.keywords) {
-        this.keywords = prettyKeywords(this.keywords)
-      }
+
+      // disable prettyKeywords until I can figure out how to keep yeoman from html-escaping quotes
+      // if(this.keywords) {
+      //   this.keywords = prettyKeywords(this.keywords)
+      // }
 
       done()
     }.bind(this))
@@ -62,7 +64,7 @@ module.exports = generators.Base.extend({
       .on('data', function (file) {
         var from = file.original
         var to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
-        this.copy(from, to)
+        this.fs.copyTpl(from, to, this)
       }.bind(this))
       .on('end', done)
       .on('error', done)

@@ -1,5 +1,7 @@
 {
-  "dependencies": {
-    "chalk": "^1.0.0"
-  }
+  "name": "<%=project%>",
+  "version": "0.0.0",
+  "description": "<%=description%>",
+  "author": "<%=username%>",
+  "license": "<%=license%>"
 }
