@@ -27,6 +27,7 @@
     "glob": "^5.0.14",
     "lodash.assign": "^3.2.0",
     "lodash.compact": "^3.0.0",
+    "prefixnote": "^1.0.0",
     "static-eval": "^0.2.4",
     "yeoman-generator": "^0.20.2",
     "yosay": "^1.0.5"
