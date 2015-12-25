@@ -46,9 +46,9 @@ module.exports = generators.Base.extend({
       this.props = props
 
       // disable prettyKeywords until I can figure out how to keep yeoman from html-escaping quotes
-      // if(this.keywords) {
-      //   this.keywords = prettyKeywords(this.keywords)
-      // }
+      if(this.keywords) {
+        this.keywords = prettyKeywords(this.keywords)
+      }
 
       done()
     }.bind(this))

@@ -2,6 +2,7 @@
   "name": "<%=project%>",
   "version": "0.0.0",
   "description": "<%=description%>",
+  "keywords": <%-keywords%>,
   "author": "<%=username%>",
   "license": "<%=license%>"
 }
