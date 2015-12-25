@@ -5,6 +5,7 @@ var yosay      = require('yosay')
 var compact    = require('lodash.compact')
 var extend     = require('lodash.assign')
 var prefixnote = require('prefixnote')
+var chalk      = require('chalk')
 
 // prettifies a string of keywords to display each one on a separate line with correct indentation in the package.json
 function prettyKeywords(keywords) {
@@ -27,8 +28,25 @@ module.exports = generators.Base.extend({
 
     generators.Base.apply(this, arguments)
 
-    this.yogaFile = require('./yoga.json')
-    this.camelize = camelize
+    // parse yoga.json and report error messages for missing/invalid
+    try {
+      this.yogaFile = require('./yoga.json')
+    }
+    catch(e) {
+      if(e.code === 'MODULE_NOT_FOUND') {
+        console.log(chalk.red('No yoga.json found. Proceeding with simple copy.'))
+      }
+      else {
+        console.log(chalk.red('Invalid yoga.json'))
+        console.log(chalk.red(e))
+      }
+    }
+
+    // this.viewData is passed to copyTpl
+    // it is populated with the prompt results during prompting()
+    this.viewData = {
+      camelize
+    }
 
   },
 
@@ -36,18 +54,19 @@ module.exports = generators.Base.extend({
 
     var done = this.async();
 
-    // Have Yeoman greet the user.
-    // this.log(yosay('Welcome to Raine\'s marveous npm module generator!'));
+    if(this.yogaFile && !(this.yogaFile.prompts && this.yogaFile.prompts.length)) {
+      console.log(chalk.red('No prompts in yoga.json. Proceeding with simple copy.'))
+      return
+    }
 
     this.prompt(this.yogaFile.prompts, function (props) {
 
-      // assign each prop to the generator instance for use in templating
-      extend(this, props)
-      this.props = props
+      // add prompt results to the viewData
+      extend(this.viewData, props)
 
-      // disable prettyKeywords until I can figure out how to keep yeoman from html-escaping quotes
-      if(this.keywords) {
-        this.keywords = prettyKeywords(this.keywords)
+      // format keywords
+      if(props.keywords) {
+        this.viewData.keywordsFormatted = prettyKeywords(props.keywords)
       }
 
       done()
@@ -64,7 +83,7 @@ module.exports = generators.Base.extend({
       .on('data', function (file) {
         var from = file.original
         var to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
-        this.fs.copyTpl(from, to, this)
+        this.fs.copyTpl(from, to, this.viewData)
       }.bind(this))
       .on('end', done)
       .on('error', done)
