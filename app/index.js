@@ -1,11 +1,11 @@
 var generators = require('yeoman-generator')
 var path       = require('path')
 var camelize   = require('camelize')
-var yosay      = require('yosay')
 var compact    = require('lodash.compact')
-var extend     = require('lodash.assign')
+var assign     = require('lodash.assign')
 var prefixnote = require('prefixnote')
 var chalk      = require('chalk')
+var striate    = require('gulp-striate')
 
 // prettifies a string of keywords to display each one on a separate line with correct indentation in the package.json
 function prettyKeywords(keywords) {
@@ -62,7 +62,7 @@ module.exports = generators.Base.extend({
     this.prompt(this.yogaFile.prompts, function (props) {
 
       // add prompt results to the viewData
-      extend(this.viewData, props)
+      assign(this.viewData, props)
 
       // format keywords
       if(props.keywords) {
@@ -79,7 +79,9 @@ module.exports = generators.Base.extend({
 
     var done = this.async();
 
-    prefixnote.parseFiles(this.templatePath(), this.props)
+    this.registerTransformStream(striate(this.viewData))
+
+    prefixnote.parseFiles(this.templatePath(), this.viewData)
       .on('data', function (file) {
         var from = file.original
         var to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
