@@ -6,7 +6,6 @@ var assign     = require('lodash.assign')
 var prefixnote = require('prefixnote')
 var chalk      = require('chalk')
 var striate    = require('gulp-striate')
-var glob       = require('glob')
 var pkg        = require('../package.json')
 
 // if the package name is generator-yoga then we are in creation mode
