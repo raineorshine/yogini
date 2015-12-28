@@ -6,6 +6,13 @@ var assign     = require('lodash.assign')
 var prefixnote = require('prefixnote')
 var chalk      = require('chalk')
 var striate    = require('gulp-striate')
+var glob       = require('glob')
+var pkg        = require('../package.json')
+
+// if the package name is generator-yoga then we are in creation mode
+// which will recursively copy this generator itself and give it a new
+// project name so that subsequent runs will generate from app/templates
+var createMode = pkg.name === 'generator-yoga'
 
 // prettifies a string of keywords to display each one on a separate line with correct indentation in the package.json
 function prettyKeywords(keywords) {
@@ -30,7 +37,7 @@ module.exports = generators.Base.extend({
 
     // parse yoga.json and report error messages for missing/invalid
     try {
-      this.yogaFile = require('./yoga.json')
+      this.yogaFile = require(createMode ? '../create/yoga.json' : './yoga.json')
     }
     catch(e) {
       if(e.code === 'MODULE_NOT_FOUND') {
@@ -61,13 +68,19 @@ module.exports = generators.Base.extend({
 
     this.prompt(this.yogaFile.prompts, function (props) {
 
+      // disallow a project name of generator-yoga
+      if(createMode && props.name === 'generator-yoga') {
+        var error = 'You may not name your generator "generator-yoga".'
+        this.log.error(error)
+        done(error)
+        return
+      }
+
       // add prompt results to the viewData
       assign(this.viewData, props)
 
       // format keywords
-      if(props.keywords) {
-        this.viewData.keywordsFormatted = prettyKeywords(props.keywords)
-      }
+      this.viewData.keywordsFormatted = props.keywords ? prettyKeywords(props.keywords) : null
 
       done()
     }.bind(this))
@@ -79,16 +92,40 @@ module.exports = generators.Base.extend({
 
     var done = this.async();
 
-    this.registerTransformStream(striate(this.viewData))
+    if(createMode) {
 
-    prefixnote.parseFiles(this.templatePath(), this.viewData)
-      .on('data', function (file) {
-        var from = file.original
-        var to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
-        this.fs.copyTpl(from, to, this.viewData)
-      }.bind(this))
-      .on('end', done)
-      .on('error', done)
+      // copy yoga-generator itself
+      this.fs.copy(path.join(__dirname, '../'), this.destinationPath(), {
+        globOptions: {
+          dot: true,
+          ignore: [
+            '**/.git',
+            '**/.git/**/*',
+            '**/node_modules',
+            '**/node_modules/**/*',
+            '**/create/**/*'
+          ]
+        }
+      })
+
+      // copy the package.json
+      this.fs.copyTpl(path.join(__dirname, '../create/{}package.json'), this.destinationPath('package.json'), this.viewData)
+
+      done()
+    }
+    else {
+      this.registerTransformStream(striate(this.viewData))
+
+      prefixnote.parseFiles(this.templatePath(), this.viewData)
+        .on('data', function (file) {
+          var from = file.original
+          var to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
+          console.log(from, to)
+          this.fs.copyTpl(from, to, this.viewData)
+        }.bind(this))
+        .on('end', done)
+        .on('error', done)
+    }
   },
 
   end: function () {

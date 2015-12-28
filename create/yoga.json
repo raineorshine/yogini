@@ -1,0 +1,34 @@
+{
+  "prompts": [
+    {
+      "type": "text",
+      "name": "name",
+      "message": "generator name",
+      "default": "generator-myapp"
+    },
+    {
+      "type": "text",
+      "name": "description",
+      "message": "description"
+    },
+    {
+      "type": "text",
+      "name": "username",
+      "message": "github username",
+      "store": true
+    },
+    {
+      "type": "text",
+      "name": "repo",
+      "message": "repository",
+      "store": true
+    },
+    {
+      "type": "text",
+      "name": "license",
+      "message": "license",
+      "default": "ISC",
+      "store": true
+    }
+  ]
+}
