@@ -1,7 +1,10 @@
 {
   "name": "generator-yoga",
   "version": "0.0.0",
-  "description": "Code-less personal scaffolding.",
+  "description": "Code-less scaffolding.",
+  "files": [
+    "app"
+  ],
   "license": "ISC",
   "repository": "metaraine/generator-yoga",
   "author": {
