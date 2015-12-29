@@ -8,7 +8,7 @@ What makes **yoga** different?
 
 - The logic of copying files is in the filenames themselves.
 - Uses whitespace-friendly [striate](https://github.com/metaraine/striate) templating.
-- Everything is powered by command-line prompts, specified in JSON.
+- Everything is powered by command-line [Inquirer](https://github.com/SBoudrias/Inquirer.js) prompts.
 
 *(see [How it works](#how-it-works) below for details)*
 
@@ -35,11 +35,11 @@ $ npm link                          # alias your generator to your globally
 ### 2. Edit your generator
 
 - Add all your template/boilerplate files to `app/templates`. 
-- Edit the prompts in `app/yoga.json`. 
+- Edit the [Inquirer](https://github.com/SBoudrias/Inquirer.js) prompts in `app/yoga.json`. 
 
 Your prompts drive your generator, determining which files get copied (via [prefixnotes](https://github.com/metaraine/prefixnote)) and what code gets copied (via [striate](https://github.com/metaraine/striate), an extension of [ejs](https://github.com/mde/ejs)). You can edit these files at any time to modify your generator. 
 
-Check out [yoga-sample](https://github.com/metaraine/yoga-sample) for an example yoga generator.
+Check out [generator-yoga-sample](https://github.com/metaraine/generator-yoga-sample) for an example yoga generator.
 
 See [How it works](#how-it-works) below for detailed information.
 
@@ -57,7 +57,7 @@ $ yo mygenerator
 
 Yoga provides a unique scaffolding and templating system that allows your entire generator to be drive by prompts in a yoga.json file.
 
-Prompts drive everything in a yoga generator.
+[Inquirer](https://github.com/SBoudrias/Inquirer.js) prompts drive everything in a yoga generator.
 
 Sample yoga.json file:
 
@@ -132,7 +132,7 @@ See [prefixnote](https://github.com/metaraine/prefixnote) for the nitty-gritty.
 
 ### 2. Templating
 
-You can use [striate](https://github.com/metaraine/striate), a superset of [ejs](https://github.com/mde/ejs), to control which code gets generated within the files. The same prompt variables are available within the scope of your files.
+You can use [striate](https://github.com/metaraine/striate), a superset of [ejs](https://github.com/mde/ejs), to control which code gets generated within the files. The answers given to the prompts in yoga.json are available as variables within the scope of your template files.
 
 ```html
 <!DOCTYPE html>
@@ -150,7 +150,7 @@ You can use [striate](https://github.com/metaraine/striate), a superset of [ejs]
 </html>
 ```
 
-You can see a complete yoga generator with prompts, file prefixes, and templating at [yoga-sample](https://github.com/metaraine/yoga-sample).
+You can see a complete yoga generator with prompts, file prefixes, and templating at [generator-yoga-sample](https://github.com/metaraine/generator-yoga-sample).
 
 ## License
 
