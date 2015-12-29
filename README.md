@@ -112,7 +112,7 @@ Some notes about file copying:
     └── 3.js
   ```
 
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇨
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇨
 
   ```
   main.js
