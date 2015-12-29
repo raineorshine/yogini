@@ -102,6 +102,7 @@ module.exports = generators.Base.extend({
             '**/.git/**/*',
             '**/node_modules',
             '**/node_modules/**/*',
+            '**/test/**/*',
             '**/create/**/*'
           ]
         }
