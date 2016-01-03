@@ -2,9 +2,8 @@
   "prompts": [
     {
       "type": "text",
-      "name": "name",
-      "message": "generator name",
-      "default": "generator-myapp"
+      "name": "project",
+      "message": "generator name"
     },
     {
       "type": "text",

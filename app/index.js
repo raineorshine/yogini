@@ -1,3 +1,4 @@
+require('array.prototype.find')
 var generators = require('yeoman-generator')
 var path       = require('path')
 var camelize   = require('camelize')
@@ -6,6 +7,7 @@ var assign     = require('lodash.assign')
 var prefixnote = require('prefixnote')
 var chalk      = require('chalk')
 var striate    = require('gulp-striate')
+var R          = require('ramda')
 var pkg        = require('../package.json')
 
 // if the package name is generator-yoga then we are in creation mode
@@ -65,6 +67,12 @@ module.exports = generators.Base.extend({
       return
     }
 
+    // set the default project name to the destination folder name
+    var projectPrompt = this.yogaFile.prompts.find(R.propEq('name', 'project'))
+    if(projectPrompt) {
+      projectPrompt.default = path.basename(this.env.cwd)
+    }
+
     this.prompt(this.yogaFile.prompts, function (props) {
 
       // disallow a project name of generator-yoga
@@ -108,8 +116,10 @@ module.exports = generators.Base.extend({
         }
       })
 
-      // copy the package.json
+      // copy the package.json and README
       this.fs.copyTpl(path.join(__dirname, '../create/{}package.json'), this.destinationPath('package.json'), this.viewData)
+
+      this.fs.copyTpl(path.join(__dirname, '../create/README.md'), this.destinationPath('README.md'), this.viewData)
 
       done()
     }
