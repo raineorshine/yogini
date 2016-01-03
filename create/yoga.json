@@ -3,29 +3,23 @@
     {
       "type": "text",
       "name": "project",
-      "message": "generator name"
+      "message": "Generator Name"
     },
     {
       "type": "text",
       "name": "description",
-      "message": "description"
+      "message": "Description"
     },
     {
       "type": "text",
       "name": "username",
-      "message": "github username",
-      "store": true
-    },
-    {
-      "type": "text",
-      "name": "repo",
-      "message": "repository",
+      "message": "Github Username",
       "store": true
     },
     {
       "type": "text",
       "name": "license",
-      "message": "license",
+      "message": "License",
       "default": "ISC",
       "store": true
     }
