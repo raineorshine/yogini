@@ -8,6 +8,7 @@ var prefixnote = require('prefixnote')
 var chalk      = require('chalk')
 var striate    = require('gulp-striate')
 var R          = require('ramda')
+var fileExists = require('file-exists')
 var pkg        = require('../package.json')
 
 // if the package name is generator-yoga then we are in creation mode
@@ -38,7 +39,8 @@ module.exports = generators.Base.extend({
 
     // parse yoga.json and report error messages for missing/invalid
     try {
-      this.yogaFile = require(createMode ? '../create/yoga.json' : './yoga.json')
+      this.yogaFile = require(createMode ? '../create/yoga.json' :
+        fileExists('./yoga.json') ? './yoga.json' : './yoga.js')
     }
     catch(e) {
       if(e.code === 'MODULE_NOT_FOUND') {
