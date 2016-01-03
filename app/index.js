@@ -11,6 +11,9 @@ var R          = require('ramda')
 var fileExists = require('file-exists')
 var pkg        = require('../package.json')
 
+// files that should never be copied
+var ignore = ['.DS_Store']
+
 // if the package name is generator-yoga then we are in creation mode
 // which will recursively copy this generator itself and give it a new
 // project name so that subsequent runs will generate from app/templates
@@ -44,10 +47,10 @@ module.exports = generators.Base.extend({
     }
     catch(e) {
       if(e.code === 'MODULE_NOT_FOUND') {
-        console.log(chalk.red('No yoga.json found. Proceeding with simple copy.'))
+        console.log(chalk.red('No yoga file found. Proceeding with simple copy.'))
       }
       else {
-        console.log(chalk.red('Invalid yoga.json'))
+        console.log(chalk.red('Invalid yoga file'))
         console.log(chalk.red(e))
       }
     }
@@ -129,12 +132,21 @@ module.exports = generators.Base.extend({
       this.registerTransformStream(striate(this.viewData))
 
       prefixnote.parseFiles(this.templatePath(), this.viewData)
+
+        // copy each file that is traversed
         .on('data', function (file) {
-          var from = file.original
-          var to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
-          console.log(from, to)
-          this.fs.copyTpl(from, to, this.viewData)
+          var filename = path.basename(file.original)
+
+          // always ignore files like .DS_Store
+          if(ignore.indexOf(filename) === -1) {
+            var from = file.original
+            var to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
+
+            // copy the file with templating
+            this.fs.copyTpl(from, to, this.viewData)
+          }
         }.bind(this))
+
         .on('end', done)
         .on('error', done)
     }
