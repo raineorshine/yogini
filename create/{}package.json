@@ -12,6 +12,7 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
+    "array.prototype.find": "^1.0.0",
     "bluebird": "^2.9.34",
     "camelize": "^1.0.0",
     "chalk": "^1.1.1",
