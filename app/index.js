@@ -2,13 +2,12 @@ require('array.prototype.find')
 var generators = require('yeoman-generator')
 var path       = require('path')
 var camelize   = require('camelize')
-var compact    = require('lodash.compact')
-var assign     = require('lodash.assign')
 var prefixnote = require('prefixnote')
 var chalk      = require('chalk')
 var striate    = require('gulp-striate')
 var R          = require('ramda')
 var fileExists = require('file-exists')
+var indent     = require('indent-string')
 var pkg        = require('../package.json')
 
 // files that should never be copied
@@ -19,19 +18,14 @@ var ignore = ['.DS_Store']
 // project name so that subsequent runs will generate from app/templates
 var createMode = pkg.name === 'generator-yoga'
 
-// prettifies a string of keywords to display each one on a separate line with correct indentation in the package.json
-function prettyKeywords(keywords) {
+// parse an array from a string
+function parseArray(str) {
+  return R.filter(R.identity, str.split(',').map(R.invoker(0, 'trim')))
+}
 
-  // convert the keywords string into an array
-  keywordArray = compact( // remove empty values
-    keywords.split(',')
-    .map(function(s) { return s.trim() }) // trim
-  );
-
-  // prettify the keywordArray to display each one on a separate line with correct indentation in the package.json
-  return JSON.stringify(keywordArray)
-    .replace(/([[,])/g, '$1\n    ') // add '    \n' after each item
-    .replace(/]/g, '\n  ]') // add a newline before the closing ]
+// stringify an object and indent everything after the opening line
+function stringifyIndented(value, chr, n) {
+  return indent(JSON.stringify(value, null, n), chr, n).slice(chr.length * n)
 }
 
 module.exports = generators.Base.extend({
@@ -53,12 +47,6 @@ module.exports = generators.Base.extend({
         console.log(chalk.red('Invalid yoga file'))
         console.log(chalk.red(e))
       }
-    }
-
-    // this.viewData is passed to copyTpl
-    // it is populated with the prompt results during prompting()
-    this.viewData = {
-      camelize
     }
 
   },
@@ -88,11 +76,10 @@ module.exports = generators.Base.extend({
         return
       }
 
-      // add prompt results to the viewData
-      assign(this.viewData, props)
-
-      // format keywords
-      this.viewData.keywordsFormatted = props.keywords ? prettyKeywords(props.keywords) : null
+      // populate viewData from the prompts and formatted values
+      this.viewData = R.merge(props, {
+        keywordsFormatted: stringifyIndented(parseArray(props.keywords), ' ', 2)
+      })
 
       done()
     }.bind(this))
