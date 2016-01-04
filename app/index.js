@@ -78,6 +78,7 @@ module.exports = generators.Base.extend({
 
       // populate viewData from the prompts and formatted values
       this.viewData = R.merge(props, {
+        camelize: camelize,
         keywordsFormatted: stringifyIndented(parseArray(props.keywords), ' ', 2)
       })
 
