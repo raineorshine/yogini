@@ -1,5 +1,7 @@
 # yoga
 
+[![Join the chat at https://gitter.im/metaraine/generator-yoga](https://badges.gitter.im/metaraine/generator-yoga.svg)](https://gitter.im/metaraine/generator-yoga?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![npm version](https://img.shields.io/npm/v/generator-yoga.svg)](https://npmjs.org/package/generator-yoga) 
 [![Build Status](https://travis-ci.org/metaraine/generator-yoga.svg)](https://travis-ci.org/metaraine/generator-yoga)
 
