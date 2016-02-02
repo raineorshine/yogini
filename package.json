@@ -1,7 +1,7 @@
 {
   "name": "generator-yoga",
   "version": "1.1.0",
-  "description": "Code-less scaffolding.",
+  "description": "Simple, prompt-driven scaffolding for continuously evolving boilerplates.",
   "files": [
     "app"
   ],
