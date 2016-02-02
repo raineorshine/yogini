@@ -31,10 +31,6 @@ describe('yoga', function () {
       ])
     })
 
-    it('copies the README', function () {
-      assert.fileContent('README.md', 'A fresh generator!\n\n*Created by [yoga](https://github.com/metaraine/generator-yoga)*')
-    })
-
     it('copies the package.json and populates it with the prompt values', function() {
       assert.fileContent('package.json', '"name": "myproject"')
       assert.fileContent('package.json', '"description": "mydescription"')
