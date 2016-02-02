@@ -71,28 +71,25 @@ module.exports = generators.Base.extend({
 
   prompting: function () {
 
-    var done = this.async();
-
     if(this.yogaFile && !(this.yogaFile.prompts && this.yogaFile.prompts.length)) {
       console.log(chalk.red('No prompts in yoga.json. Proceeding with simple copy.'))
       return
     }
 
-    // set the default project name to the destination folder name
-    var projectPrompt = this.yogaFile.prompts.find(R.propEq('name', 'project'))
-    if(projectPrompt) {
+    // set the default project name to the destination folder name and provide a validation function
+    if(this.createMode) {
+      var projectPrompt = this.yogaFile.prompts.find(R.propEq('name', 'project'))
       projectPrompt.default = path.basename(this.env.cwd)
+      projectPrompt.validate = function (input) {
+        return input === 'generator-yoga' ? 'Cannot be named "generator-yoga"' :
+          input.indexOf('generator-') !== 0 ? 'Must start with "generator-"' :
+          true
+      }
     }
 
-    this.prompt(this.yogaFile.prompts, function (props) {
+    var done = this.async();
 
-      // disallow a project name of generator-yoga
-      if(this.createMode && props.name === 'generator-yoga') {
-        var error = 'You may not name your generator "generator-yoga".'
-        this.log.error(error)
-        done(error)
-        return
-      }
+    this.prompt(this.yogaFile.prompts, function (props) {
 
       // populate viewData from the prompts and formatted values
       this.viewData = R.merge(props, {
