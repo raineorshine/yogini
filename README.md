@@ -1,6 +1,7 @@
 # yoga
 
 [![npm version](https://img.shields.io/npm/v/generator-yoga.svg)](https://npmjs.org/package/generator-yoga) 
+[![Build Status](https://travis-ci.org/metaraine/generator-yoga.svg)](https://travis-ci.org/metaraine/generator-yoga)
 
 **yoga** is a prompt-driven *scaffolding system* (boilerplate/starter-code generation). Its aim is to make it easier to create and maintain personal boilerplates that evolve over time.
 
