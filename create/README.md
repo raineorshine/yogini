@@ -1,3 +1,3 @@
 A fresh generator!
 
-*Created by [yoga](https://github.com/metaraine/generator-yoga)*
+*Created by [yogajs](http://metaraine.github.io/generator-yoga/): prompt-driven scaffolding for continuously evolving boilerplates.*
