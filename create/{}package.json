@@ -19,6 +19,7 @@
     "gulp-striate": "^1.0.0",
     "indent-string": "^2.1.0",
     "prefixnote": "^1.0.0",
+    "ramda": "^0.19.0",
     "yeoman-generator": "^0.20.2"
   }
 }

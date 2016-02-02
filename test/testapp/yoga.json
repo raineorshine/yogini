@@ -1,0 +1,34 @@
+{
+  "prompts": [
+    {
+      "type": "text",
+      "name": "project",
+      "message": "project name"
+    },
+    {
+      "type": "text",
+      "name": "description",
+      "message": "project description"
+    },
+    {
+      "type": "text",
+      "name": "foo"
+    },
+    {
+      "type": "boolean",
+      "name": "striate"
+    },
+    {
+      "type": "boolean",
+      "name": "folderIgnore"
+    },
+    {
+      "type": "boolean",
+      "name": "folderInclude"
+    },
+    {
+      "type": "boolean",
+      "name": "flatten"
+    }
+  ]
+}

@@ -6,17 +6,11 @@ var prefixnote = require('prefixnote')
 var chalk      = require('chalk')
 var striate    = require('gulp-striate')
 var R          = require('ramda')
-var fileExists = require('file-exists')
 var indent     = require('indent-string')
 var pkg        = require('../package.json')
 
 // files that should never be copied
 var ignore = ['.DS_Store']
-
-// if the package name is generator-yoga then we are in creation mode
-// which will recursively copy this generator itself and give it a new
-// project name so that subsequent runs will generate from app/templates
-var createMode = pkg.name === 'generator-yoga'
 
 // parse an array from a string
 function parseArray(str) {
@@ -34,10 +28,34 @@ module.exports = generators.Base.extend({
 
     generators.Base.apply(this, arguments)
 
+    this.option('test')
+
+    // if the package name is generator-yoga then we are in creation mode
+    // which will recursively copy this generator itself and give it a new
+    // project name so that subsequent runs will generate from app/templates
+    this.createMode = !this.options.test && pkg.name === 'generator-yoga'
+
     // parse yoga.json and report error messages for missing/invalid
     try {
-      this.yogaFile = require(createMode ? '../create/yoga.json' :
-        fileExists('./yoga.json') ? './yoga.json' : './yoga.js')
+      if(this.createMode) {
+        this.yogaFile = require('../create/yoga.json')
+      }
+      else if(this.options.test) {
+        this.yogaFile = require('../test/testapp/yoga.json')
+      }
+      else {
+        try {
+          this.yogaFile = require('./yoga.json')
+        }
+        catch(e) {
+          if(e.code !== 'MODULE_NOT_FOUND') {
+            this.yogaFile = require('./yoga.js')
+          }
+          else {
+            throw e
+          }
+        }
+      }
     }
     catch(e) {
       if(e.code === 'MODULE_NOT_FOUND') {
@@ -69,7 +87,7 @@ module.exports = generators.Base.extend({
     this.prompt(this.yogaFile.prompts, function (props) {
 
       // disallow a project name of generator-yoga
-      if(createMode && props.name === 'generator-yoga') {
+      if(this.createMode && props.name === 'generator-yoga') {
         var error = 'You may not name your generator "generator-yoga".'
         this.log.error(error)
         done(error)
@@ -92,13 +110,14 @@ module.exports = generators.Base.extend({
 
     var done = this.async();
 
-    if(createMode) {
+    if(this.createMode) {
 
       // copy yoga-generator itself
       this.fs.copy(path.join(__dirname, '../'), this.destinationPath(), {
         globOptions: {
           dot: true,
           ignore: [
+            '**/.DS_Store',
             '**/.git',
             '**/.git/**/*',
             '**/node_modules',
