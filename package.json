@@ -1,6 +1,6 @@
 {
   "name": "generator-yoga",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Simple, prompt-driven scaffolding for continuously evolving boilerplates.",
   "files": [
     "app"
