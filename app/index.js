@@ -30,26 +30,26 @@ module.exports = generators.Base.extend({
 
     this.option('test')
 
-    // if the package name is generator-yoga then we are in creation mode
+    // if the package name is yogini then we are in creation mode
     // which will recursively copy this generator itself and give it a new
     // project name so that subsequent runs will generate from app/templates
-    this.createMode = !this.options.test && pkg.name === 'generator-yoga'
+    this.createMode = !this.options.test && pkg.name === 'yogini'
 
-    // parse yoga.json and report error messages for missing/invalid
+    // parse yogini.json and report error messages for missing/invalid
     try {
       if(this.createMode) {
-        this.yogaFile = require('../create/yoga.json')
+        this.yoginiFile = require('../create/yogini.json')
       }
       else if(this.options.test) {
-        this.yogaFile = require('../test/testapp/yoga.json')
+        this.yoginiFile = require('../test/testapp/yogini.json')
       }
       else {
         try {
-          this.yogaFile = require('./yoga.json')
+          this.yoginiFile = require('./yogini.json')
         }
         catch(e) {
           if(e.code !== 'MODULE_NOT_FOUND') {
-            this.yogaFile = require('./yoga.js')
+            this.yoginiFile = require('./yogini.js')
           }
           else {
             throw e
@@ -59,10 +59,10 @@ module.exports = generators.Base.extend({
     }
     catch(e) {
       if(e.code === 'MODULE_NOT_FOUND') {
-        console.log(chalk.red('No yoga file found. Proceeding with simple copy.'))
+        console.log(chalk.red('No yogini file found. Proceeding with simple copy.'))
       }
       else {
-        console.log(chalk.red('Invalid yoga file'))
+        console.log(chalk.red('Invalid yogini file'))
         console.log(chalk.red(e))
       }
     }
@@ -71,17 +71,17 @@ module.exports = generators.Base.extend({
 
   prompting: function () {
 
-    if(this.yogaFile && !(this.yogaFile.prompts && this.yogaFile.prompts.length)) {
-      console.log(chalk.red('No prompts in yoga.json. Proceeding with simple copy.'))
+    if(this.yoginiFile && !(this.yoginiFile.prompts && this.yoginiFile.prompts.length)) {
+      console.log(chalk.red('No prompts in yogini.json. Proceeding with simple copy.'))
       return
     }
 
     // set the default project name to the destination folder name and provide a validation function
     if(this.createMode) {
-      var projectPrompt = this.yogaFile.prompts.find(R.propEq('name', 'project'))
+      var projectPrompt = this.yoginiFile.prompts.find(R.propEq('name', 'project'))
       projectPrompt.default = path.basename(this.env.cwd)
       projectPrompt.validate = function (input) {
-        return input === 'generator-yoga' ? 'Cannot be named "generator-yoga"' :
+        return input === 'yogini' ? 'Cannot be named "yogini"' :
           input.indexOf('generator-') !== 0 ? 'Must start with "generator-"' :
           true
       }
@@ -89,7 +89,7 @@ module.exports = generators.Base.extend({
 
     var done = this.async();
 
-    this.prompt(this.yogaFile.prompts, function (props) {
+    this.prompt(this.yoginiFile.prompts, function (props) {
 
       // populate viewData from the prompts and formatted values
       this.viewData = R.merge(props, {
@@ -109,7 +109,7 @@ module.exports = generators.Base.extend({
 
     if(this.createMode) {
 
-      // copy yoga-generator itself
+      // copy yogini-generator itself
       this.fs.copy(path.join(__dirname, '../'), this.destinationPath(), {
         globOptions: {
           dot: true,

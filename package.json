@@ -1,15 +1,15 @@
 {
-  "name": "generator-yoga",
+  "name": "yogini",
   "version": "1.2.1",
   "description": "Simple, prompt-driven scaffolding for continuously evolving boilerplates.",
   "files": [
     "app"
   ],
   "license": "ISC",
-  "repository": "metaraine/generator-yoga",
+  "repository": "raineorshine/yogini",
   "author": {
-    "name": "Raine Lourie",
-    "url": "https://github.com/metaraine"
+    "name": "Raine Revere",
+    "url": "https://github.com/raineorshine"
   },
   "scripts": {
     "test": "mocha -t 10000"

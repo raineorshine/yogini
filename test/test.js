@@ -2,7 +2,7 @@ var helpers = require('yeoman-test')
 var path = require('path')
 var assert = require('yeoman-assert')
 
-describe('yoga', function () {
+describe('yogini', function () {
 
   describe('create mode', function () {
 
@@ -26,7 +26,7 @@ describe('yoga', function () {
         'README.md',
         'app',
         'app/index.js',
-        'app/yoga.json',
+        'app/yogini.json',
         'app/templates/README.md'
       ])
     })
