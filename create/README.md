@@ -1,3 +1,3 @@
 A fresh generator!
 
-*Created by [yogini](http://raineorshine.github.io/yogini/): prompt-driven scaffolding for continuously evolving boilerplates.*
+*Created by [yogini](https://github.com/raineorshine/yogini/): prompt-driven scaffolding for continuously evolving boilerplates.*
