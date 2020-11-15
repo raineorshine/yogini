@@ -1,16 +1,13 @@
 # yogini
-
-[![npm version](https://img.shields.io/npm/v/yogini.svg)](https://npmjs.org/package/yogini) 
-[![Build Status](https://travis-ci.org/raineorshine/yogini.svg)](https://travis-ci.org/raineorshine/yogini)
-[![Join the chat at https://gitter.im/raineorshine/yogini](https://badges.gitter.im/raineorshine/yogini.svg)](https://gitter.im/raineorshine/yogini?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![npm version](https://img.shields.io/npm/v/yogini.svg)](https://npmjs.org/package/yogini)
 
 **yogini** is a prompt-driven *scaffolding system* (boilerplate/starter-code generation). Its aim is to make it easier to create and maintain personal boilerplates that evolve over time.
 
 What makes **yogini** different?
 
-- 100% driven by command-line prompts (via [Inquirer](https://github.com/SBoudrias/Inquirer.js)).
-- The logic of copying files is in the filenames themselves, e.g. `{isGulp}gulpfile.js` or `{useSass}main.scss`.
-- Files are templated using [ejs](https://github.com/mde/ejs), extended with additional whitespace-friendly syntax for better readability (via [striate](https://github.com/raineorshine/striate)).
+- Prompt-driven (via [Inquirer](https://github.com/SBoudrias/Inquirer.js)).
+- Embedded file-copying logic, e.g. `{useGulp}gulpfile.js` or `{useSass}main.scss`.
+- Templating with [striate](https://github.com/raineorshine/striate), a superset of [ejs](https://github.com/mde/ejs) with better whitespace handling of multi-line blocks.
 
 *(see [How it works](#how-it-works) below for details)*
 
@@ -178,4 +175,4 @@ You can see a complete yogini generator with prompts, file prefixes, and templat
 
 ## License
 
-ISC © [Raine Lourie](https://github.com/raineorshine)
+ISC © [Raine Revere](https://github.com/raineorshine)
