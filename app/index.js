@@ -6,6 +6,7 @@ const chalk = require('chalk')
 const striate = require('gulp-striate')
 const R = require('ramda')
 const indent = require('indent-string')
+const once = require('once')
 const pkg = require('../package.json')
 
 // files that should never be copied
@@ -27,26 +28,34 @@ module.exports = class extends Generator {
 
     this.option('test')
 
-    // if the package name is yogini then we are in creation mode
+    // if the package name is generator-yogini then we are in creation mode
     // which will recursively copy this generator itself and give it a new
     // project name so that subsequent runs will generate from app/templates
     this.createMode = !this.options.test && pkg.name === 'generator-yogini'
 
-    // parse yogini.json and report error messages for missing/invalid
+    this.yoginiFile = this.getYoginiFile()
+
+  }
+
+  /** Try loading the yogini file from various locations, parse, and report error messages if missing/invalid. */
+  getYoginiFile() {
+
+    let yoginiFile // eslint-disable-line fp/no-let
+
     try {
       if (this.createMode) {
-        this.yoginiFile = require('../create/yogini.json')
+        yoginiFile = require('../create/yogini.json')
       }
       else if (this.options.test) {
-        this.yoginiFile = require('../test/testapp/yogini.json')
+        yoginiFile = require('../test/testapp/yogini.json')
       }
       else {
         try {
-          this.yoginiFile = require('./yogini.json')
+          yoginiFile = require('./yogini.json')
         }
         catch (e) {
-          if (e.code !== 'MODULE_NOT_FOUND') {
-            this.yoginiFile = require('./yogini.js')
+          if (e.code === 'MODULE_NOT_FOUND') {
+            yoginiFile = require('./yogini.js')
           }
           else {
             throw e
@@ -56,20 +65,22 @@ module.exports = class extends Generator {
     }
     catch (e) {
       if (e.code === 'MODULE_NOT_FOUND') {
-        console.warn(chalk.yellow('No yogini file found. Proceeding with simple copy.'))
       }
       else {
-        console.error(chalk.red('Invalid yogini file'))
-        console.error(chalk.red(e))
+        this.env.error(chalk.red('Invalid yogini file'))
+        this.env.error(chalk.red(e))
       }
     }
 
+    return yoginiFile
   }
 
   async prompting() {
 
-    if (this.yoginiFile && !(this.yoginiFile.prompts && this.yoginiFile.prompts.length)) {
-      console.warn(chalk.yellow('No prompts in yogini.json. Proceeding with simple copy.'))
+    if (!this.yoginiFile) return
+
+    if (!this.yoginiFile.prompts?.length) {
+      this.log(chalk.yellow('No prompts in yogini.json. Proceeding with simple copy.'))
       return
     }
 
@@ -86,10 +97,11 @@ module.exports = class extends Generator {
     const props = await this.prompt(this.yoginiFile.prompts)
 
     // populate viewData from the prompts and formatted values
-    this.viewData = R.merge(props, {
-      camelize: camelize,
+    this.viewData = {
+      ...props,
+      camelize,
       keywordsFormatted: props.keywords ? stringifyIndented(parseArray(props.keywords), ' ', 2) : ''
-    })
+    }
   }
 
   // Copies all files from the template directory to the destination path
@@ -129,7 +141,7 @@ module.exports = class extends Generator {
     }
     else {
 
-      const done = this.async()
+      const doneOnce = once(this.async())
 
       this.registerTransformStream(striate(this.viewData))
 
@@ -137,6 +149,10 @@ module.exports = class extends Generator {
 
         // copy each file that is traversed
         .on('data', file => {
+
+          // done may already have been called if there was an error, but parseFiles will keep outputting data. If so, bail.
+          if (doneOnce.called) return
+
           const filename = path.basename(file.original)
 
           // always ignore files like .DS_Store
@@ -145,12 +161,18 @@ module.exports = class extends Generator {
             const to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
 
             // copy the file with templating
-            this.fs.copyTpl(from, to, this.viewData)
+            try {
+              this.fs.copyTpl(from, to, this.viewData)
+            }
+            catch (e) {
+              this.env.error(chalk.red(e))
+              doneOnce(e)
+            }
           }
         })
 
-        .on('end', done)
-        .on('error', done)
+        .on('error', doneOnce)
+        .on('end', doneOnce)
     }
   }
 
