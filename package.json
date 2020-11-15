@@ -27,7 +27,6 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "array.prototype.find": "^2.1.1",
     "bluebird": "^3.7.2",
     "camelize": "^1.0.0",
     "chalk": "^4.1.0",

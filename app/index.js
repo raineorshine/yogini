@@ -1,4 +1,3 @@
-require('array.prototype.find')
 const generators = require('yeoman-generator')
 const path = require('path')
 const camelize = require('camelize')
