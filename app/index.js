@@ -96,8 +96,6 @@ module.exports = class extends Generator {
   // parsing filenames using prefixnote and running them through striate
   writing() {
 
-    const done = this.async()
-
     if (this.createMode) {
 
       // copy yogini-generator itself
@@ -128,10 +126,11 @@ module.exports = class extends Generator {
         this.destinationPath('README.md'),
         this.viewData
       )
-
-      done()
     }
     else {
+
+      const done = this.async()
+
       this.registerTransformStream(striate(this.viewData))
 
       prefixnote.parseFiles(this.templatePath(), this.viewData)

@@ -6,15 +6,14 @@ describe('yogini', () => {
 
   describe('create mode', () => {
 
-    before(done => {
-      helpers.run(path.join(__dirname, '../app'))
+    before(async () => {
+      await helpers.run(path.join(__dirname, '../app'))
         .withPrompts({
           project: 'myproject',
           description: 'mydescription',
           username: 'metaraine',
           license: 'ISC'
         })
-        .on('end', done)
     })
 
     it('copies files', () => {
@@ -42,8 +41,8 @@ describe('yogini', () => {
 
   describe('test app', () => {
 
-    before(done => {
-      helpers.run(path.join(__dirname, 'testapp'))
+    before(async () => {
+      await helpers.run(path.join(__dirname, 'testapp'))
         .withOptions({ test: true })
         .withPrompts({
           project: 'myproject',
@@ -53,7 +52,6 @@ describe('yogini', () => {
           folderInclude: true,
           flatten: true
         })
-        .on('end', done)
     })
 
     it('copies files', () => {
