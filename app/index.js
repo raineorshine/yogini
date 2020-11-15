@@ -58,11 +58,11 @@ module.exports = class extends Generator {
     }
     catch (e) {
       if (e.code === 'MODULE_NOT_FOUND') {
-        console.log(chalk.red('No yogini file found. Proceeding with simple copy.'))
+        console.warn(chalk.yellow('No yogini file found. Proceeding with simple copy.'))
       }
       else {
-        console.log(chalk.red('Invalid yogini file'))
-        console.log(chalk.red(e))
+        console.error(chalk.red('Invalid yogini file'))
+        console.error(chalk.red(e))
       }
     }
 
@@ -71,7 +71,7 @@ module.exports = class extends Generator {
   async prompting() {
 
     if (this.yoginiFile && !(this.yoginiFile.prompts && this.yoginiFile.prompts.length)) {
-      console.log(chalk.red('No prompts in yogini.json. Proceeding with simple copy.'))
+      console.warn(chalk.yellow('No prompts in yogini.json. Proceeding with simple copy.'))
       return
     }
 
