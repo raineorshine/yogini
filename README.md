@@ -1,17 +1,15 @@
 # yogini
 [![npm version](https://img.shields.io/npm/v/yogini.svg)](https://npmjs.org/package/yogini)
 
-**yogini** is a prompt-driven *scaffolding system* (boilerplate/starter-code generation). Its aim is to make it easier to create and maintain personal boilerplates that evolve over time.
+**yogini** is a prompt-driven scaffolding system. It makes it easy to create and maintain personal boilerplates that evolve over time.
 
 What makes **yogini** different?
 
-- Prompt-driven (via [Inquirer](https://github.com/SBoudrias/Inquirer.js)).
-- Embedded file-copying logic, e.g. `{useGulp}gulpfile.js` or `{useSass}main.scss`.
-- Templating with [striate](https://github.com/raineorshine/striate), a superset of [ejs](https://github.com/mde/ejs) with better whitespace handling of multi-line blocks.
+- Prompt-driven (via [Inquirer](https://github.com/SBoudrias/Inquirer.js)) with [easy prompt configuration](https://github.com/raineorshine/yogini/blob/master/app/yogini.json)
+- Embedded file-copying logic, e.g. `{useSass}main.scss`
+- Templating with [striate](https://github.com/raineorshine/striate), a superset of [ejs](https://github.com/mde/ejs) with better handling of multi-line blocks
 
-*(see [How it works](#how-it-works) below for details)*
-
-Generators created by yogini are [yeoman](http://yeoman.io/) generators, so they can be published and consumed them like any other yeoman generator. You do not need to understand yeoman to use yogini, however, and you do not need to write any code to create and maintain your generator.
+Generators created by yogini are [yeoman](http://yeoman.io/) generators, so they can be published and consumed them like any other yeoman generator. You do not need to understand yeoman to use yogini.
 
 ## Usage
 
@@ -65,14 +63,14 @@ For example, if you have a prompt in your yogini.json that inquires about Javasc
 }
 ```
 
-And a file in `app/templates` which specifies the prompt `name` in a [prefixnote](https://github.com/raineorshine/prefixnote):
+...and you have a file in `app/templates` which specifies the prompt `name` in a [prefixnote](https://github.com/raineorshine/prefixnote):
 
 ```
 .
 └── {js}main.js
 ```
 
-Then when you run the generator, you will be prompted `Does your project use Javascript?`. If you choose yes, `main.js` will be copied into the project directory. If you choose no, it will not be copied.
+...then when you run the generator, you will be prompted with `Does your project use Javascript?`. If you choose yes, `main.js` will be copied into the project directory. If you choose no, it will not be copied.
 
 Check out [generator-yogini-sample](https://github.com/raineorshine/generator-yogini-sample) for an example yogini generator.
 
