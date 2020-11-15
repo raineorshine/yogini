@@ -74,7 +74,7 @@ And a file in `app/templates` which specifies the prompt `name` in a [prefixnote
 
 Then when you run the generator, you will be prompted `Does your project use Javascript?`. If you choose yes, `main.js` will be copied into the project directory. If you choose no, it will not be copied.
 
-Check out [yogini-sample](https://github.com/raineorshine/yogini-sample) for an example yogini generator.
+Check out [generator-yogini-sample](https://github.com/raineorshine/generator-yogini-sample) for an example yogini generator.
 
 ## More detailed usage
 
@@ -171,7 +171,7 @@ You can use [striate](https://github.com/raineorshine/striate), a superset of [e
 </html>
 ```
 
-You can see a complete yogini generator with prompts, file prefixes, and templating at [yogini-sample](https://github.com/raineorshine/yogini-sample).
+You can see a complete yogini generator with prompts, file prefixes, and templating at [generator-yogini-sample](https://github.com/raineorshine/generator-yogini-sample).
 
 ## License
 
