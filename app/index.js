@@ -155,7 +155,7 @@ module.exports = class extends Generator {
   }
 
   end() {
-    this.installDependencies()
+    this.npmInstall()
   }
 
 }
