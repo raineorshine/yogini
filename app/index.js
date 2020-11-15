@@ -1,16 +1,16 @@
 require('array.prototype.find')
-var generators = require('yeoman-generator')
-var path       = require('path')
-var camelize   = require('camelize')
-var prefixnote = require('prefixnote')
-var chalk      = require('chalk')
-var striate    = require('gulp-striate')
-var R          = require('ramda')
-var indent     = require('indent-string')
-var pkg        = require('../package.json')
+const generators = require('yeoman-generator')
+const path = require('path')
+const camelize = require('camelize')
+const prefixnote = require('prefixnote')
+const chalk = require('chalk')
+const striate = require('gulp-striate')
+const R = require('ramda')
+const indent = require('indent-string')
+const pkg = require('../package.json')
 
 // files that should never be copied
-var ignore = ['.DS_Store']
+const ignore = ['.DS_Store']
 
 // parse an array from a string
 function parseArray(str) {
@@ -37,18 +37,18 @@ module.exports = generators.Base.extend({
 
     // parse yogini.json and report error messages for missing/invalid
     try {
-      if(this.createMode) {
+      if (this.createMode) {
         this.yoginiFile = require('../create/yogini.json')
       }
-      else if(this.options.test) {
+      else if (this.options.test) {
         this.yoginiFile = require('../test/testapp/yogini.json')
       }
       else {
         try {
           this.yoginiFile = require('./yogini.json')
         }
-        catch(e) {
-          if(e.code !== 'MODULE_NOT_FOUND') {
+        catch (e) {
+          if (e.code !== 'MODULE_NOT_FOUND') {
             this.yoginiFile = require('./yogini.js')
           }
           else {
@@ -57,8 +57,8 @@ module.exports = generators.Base.extend({
         }
       }
     }
-    catch(e) {
-      if(e.code === 'MODULE_NOT_FOUND') {
+    catch (e) {
+      if (e.code === 'MODULE_NOT_FOUND') {
         console.log(chalk.red('No yogini file found. Proceeding with simple copy.'))
       }
       else {
@@ -71,14 +71,14 @@ module.exports = generators.Base.extend({
 
   prompting: function () {
 
-    if(this.yoginiFile && !(this.yoginiFile.prompts && this.yoginiFile.prompts.length)) {
+    if (this.yoginiFile && !(this.yoginiFile.prompts && this.yoginiFile.prompts.length)) {
       console.log(chalk.red('No prompts in yogini.json. Proceeding with simple copy.'))
       return
     }
 
     // set the default project name to the destination folder name and provide a validation function
-    if(this.createMode) {
-      var projectPrompt = this.yoginiFile.prompts.find(R.propEq('name', 'project'))
+    if (this.createMode) {
+      const projectPrompt = this.yoginiFile.prompts.find(R.propEq('name', 'project'))
       projectPrompt.default = path.basename(this.env.cwd)
       projectPrompt.validate = function (input) {
         return input === 'yogini' ? 'Cannot be named "yogini"' :
@@ -87,7 +87,7 @@ module.exports = generators.Base.extend({
       }
     }
 
-    var done = this.async();
+    const done = this.async()
 
     this.prompt(this.yoginiFile.prompts, function (props) {
 
@@ -105,9 +105,9 @@ module.exports = generators.Base.extend({
   // parsing filenames using prefixnote and running them through striate
   writing: function () {
 
-    var done = this.async();
+    const done = this.async()
 
-    if(this.createMode) {
+    if (this.createMode) {
 
       // copy yogini-generator itself
       this.fs.copy(path.join(__dirname, '../'), this.destinationPath(), {
@@ -139,12 +139,12 @@ module.exports = generators.Base.extend({
 
         // copy each file that is traversed
         .on('data', function (file) {
-          var filename = path.basename(file.original)
+          const filename = path.basename(file.original)
 
           // always ignore files like .DS_Store
-          if(ignore.indexOf(filename) === -1) {
-            var from = file.original
-            var to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
+          if (ignore.indexOf(filename) === -1) {
+            const from = file.original
+            const to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
 
             // copy the file with templating
             this.fs.copyTpl(from, to, this.viewData)
