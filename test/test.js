@@ -2,11 +2,11 @@ const helpers = require('yeoman-test')
 const path = require('path')
 const assert = require('yeoman-assert')
 
-describe('yogini', function () {
+describe('yogini', () => {
 
-  describe('create mode', function () {
+  describe('create mode', () => {
 
-    before(function (done) {
+    before(done => {
       helpers.run(path.join(__dirname, '../app'))
         .withPrompts({
           project: 'myproject',
@@ -17,7 +17,7 @@ describe('yogini', function () {
         .on('end', done)
     })
 
-    it('copies files', function () {
+    it('copies files', () => {
       assert.file([
         '.editorconfig',
         '.gitignore',
@@ -31,7 +31,7 @@ describe('yogini', function () {
       ])
     })
 
-    it('copies the package.json and populates it with the prompt values', function() {
+    it('copies the package.json and populates it with the prompt values', () => {
       assert.fileContent('package.json', '"name": "myproject"')
       assert.fileContent('package.json', '"description": "mydescription"')
       assert.fileContent('package.json', '"author": "metaraine"')
@@ -40,9 +40,9 @@ describe('yogini', function () {
 
   })
 
-  describe('test app', function () {
+  describe('test app', () => {
 
-    before(function (done) {
+    before(done => {
       helpers.run(path.join(__dirname, 'testapp'))
         .withOptions({ test: true })
         .withPrompts({
@@ -56,27 +56,27 @@ describe('yogini', function () {
         .on('end', done)
     })
 
-    it('copies files', function () {
+    it('copies files', () => {
       assert.file([
         'README.md'
       ])
     })
 
-    it('copies and properly renames files with empty prefixnote expressions', function () {
+    it('copies and properly renames files with empty prefixnote expressions', () => {
       assert.file([
         'empty.txt'
       ])
     })
 
-    it('templates files with ejs', function () {
+    it('templates files with ejs', () => {
       assert.fileContent('README.md', '# myproject\n\nmydescription')
     })
 
-    it('templates files with striate', function () {
+    it('templates files with striate', () => {
       assert.fileContent('striate.txt', 'A\nB\nC')
     })
 
-    it('ignores folders with a false prefixnote expression', function () {
+    it('ignores folders with a false prefixnote expression', () => {
       assert.noFile([
         'folderIgnore',
         '{folderIgnore}',
@@ -85,14 +85,14 @@ describe('yogini', function () {
       ])
     })
 
-    it('includes folders with a true prefixnote expression', function () {
+    it('includes folders with a true prefixnote expression', () => {
       assert.file([
         'folderInclude',
         'folderInclude/content.txt'
       ])
     })
 
-    it('copies files of folders with empty names into the parent folder', function () {
+    it('copies files of folders with empty names into the parent folder', () => {
       assert.file([
         'flatten.txt'
       ])

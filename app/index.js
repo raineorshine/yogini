@@ -12,14 +12,12 @@ const pkg = require('../package.json')
 const ignore = ['.DS_Store']
 
 // parse an array from a string
-function parseArray(str) {
-  return R.filter(R.identity, str.split(',').map(R.invoker(0, 'trim')))
-}
+const parseArray = str =>
+  R.filter(R.identity, str.split(',').map(R.invoker(0, 'trim')))
 
 // stringify an object and indent everything after the opening line
-function stringifyIndented(value, chr, n) {
-  return indent(JSON.stringify(value, null, n), chr, n).slice(chr.length * n)
-}
+const stringifyIndented = (value, chr, n) =>
+  indent(JSON.stringify(value, null, n), chr, n).slice(chr.length * n)
 
 module.exports = class extends Generator {
 
@@ -79,11 +77,10 @@ module.exports = class extends Generator {
     if (this.createMode) {
       const projectPrompt = this.yoginiFile.prompts.find(R.propEq('name', 'project'))
       projectPrompt.default = path.basename(this.env.cwd)
-      projectPrompt.validate = function (input) {
-        return input === 'yogini' ? 'Cannot be named "yogini"' :
-          input.indexOf('generator-') !== 0 ? 'Must start with "generator-"' :
-          true
-      }
+      projectPrompt.validate = input =>
+        input === 'yogini' ? 'Cannot be named "yogini"' :
+        input.indexOf('generator-') !== 0 ? 'Must start with "generator-"' :
+        true
     }
 
     const props = await this.prompt(this.yoginiFile.prompts)
@@ -140,7 +137,7 @@ module.exports = class extends Generator {
       prefixnote.parseFiles(this.templatePath(), this.viewData)
 
         // copy each file that is traversed
-        .on('data', function (file) {
+        .on('data', file => {
           const filename = path.basename(file.original)
 
           // always ignore files like .DS_Store
@@ -151,7 +148,7 @@ module.exports = class extends Generator {
             // copy the file with templating
             this.fs.copyTpl(from, to, this.viewData)
           }
-        }.bind(this))
+        })
 
         .on('end', done)
         .on('error', done)
