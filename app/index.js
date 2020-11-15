@@ -1,4 +1,4 @@
-const generators = require('yeoman-generator')
+const Generator = require('yeoman-generator')
 const path = require('path')
 const camelize = require('camelize')
 const prefixnote = require('prefixnote')
@@ -21,18 +21,18 @@ function stringifyIndented(value, chr, n) {
   return indent(JSON.stringify(value, null, n), chr, n).slice(chr.length * n)
 }
 
-module.exports = generators.Base.extend({
+module.exports = class extends Generator {
 
-  constructor: function () {
+  constructor(args, opts) {
 
-    generators.Base.apply(this, arguments)
+    super(args, opts)
 
     this.option('test')
 
     // if the package name is yogini then we are in creation mode
     // which will recursively copy this generator itself and give it a new
     // project name so that subsequent runs will generate from app/templates
-    this.createMode = !this.options.test && pkg.name === 'yogini'
+    this.createMode = !this.options.test && pkg.name === 'generator-yogini'
 
     // parse yogini.json and report error messages for missing/invalid
     try {
@@ -66,9 +66,9 @@ module.exports = generators.Base.extend({
       }
     }
 
-  },
+  }
 
-  prompting: function () {
+  async prompting() {
 
     if (this.yoginiFile && !(this.yoginiFile.prompts && this.yoginiFile.prompts.length)) {
       console.log(chalk.red('No prompts in yogini.json. Proceeding with simple copy.'))
@@ -86,23 +86,18 @@ module.exports = generators.Base.extend({
       }
     }
 
-    const done = this.async()
+    const props = await this.prompt(this.yoginiFile.prompts)
 
-    this.prompt(this.yoginiFile.prompts, function (props) {
-
-      // populate viewData from the prompts and formatted values
-      this.viewData = R.merge(props, {
-        camelize: camelize,
-        keywordsFormatted: props.keywords ? stringifyIndented(parseArray(props.keywords), ' ', 2) : ''
-      })
-
-      done()
-    }.bind(this))
-  },
+    // populate viewData from the prompts and formatted values
+    this.viewData = R.merge(props, {
+      camelize: camelize,
+      keywordsFormatted: props.keywords ? stringifyIndented(parseArray(props.keywords), ' ', 2) : ''
+    })
+  }
 
   // Copies all files from the template directory to the destination path
   // parsing filenames using prefixnote and running them through striate
-  writing: function () {
+  writing() {
 
     const done = this.async()
 
@@ -125,9 +120,17 @@ module.exports = generators.Base.extend({
       })
 
       // copy the package.json and README
-      this.fs.copyTpl(path.join(__dirname, '../create/{}package.json'), this.destinationPath('package.json'), this.viewData)
+      this.fs.copyTpl(
+        path.join(__dirname, '../create/{}package.json'),
+        this.destinationPath('package.json'),
+        this.viewData
+      )
 
-      this.fs.copyTpl(path.join(__dirname, '../create/README.md'), this.destinationPath('README.md'), this.viewData)
+      this.fs.copyTpl(
+        path.join(__dirname, '../create/README.md'),
+        this.destinationPath('README.md'),
+        this.viewData
+      )
 
       done()
     }
@@ -153,10 +156,10 @@ module.exports = generators.Base.extend({
         .on('end', done)
         .on('error', done)
     }
-  },
+  }
 
-  end: function () {
+  end() {
     this.installDependencies()
   }
 
-})
+}

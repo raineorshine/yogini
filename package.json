@@ -34,7 +34,7 @@
     "indent-string": "^4.0.0",
     "prefixnote": "^2.0.0",
     "ramda": "^0.27.1",
-    "yeoman-generator": "^0.20.2"
+    "yeoman-generator": "^4.12.0"
   },
   "devDependencies": {
     "eslint": "^7.13.0",
@@ -48,9 +48,9 @@
     "eslint-plugin-standard": "^4.1.0",
     "mocha": "^8.2.1",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^1.0.0"
+    "yeoman-test": "^3.0.0"
   },
   "peerDependencies": {
-    "yo": ">=1.0.0"
+    "yo": ">=3.1.1"
   }
 }
