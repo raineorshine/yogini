@@ -1,4 +1,8 @@
 {
+  "data": {
+    "extraData1": 1,
+    "extraData2": 2
+  },
   "prompts": [
     {
       "type": "text",
@@ -11,16 +15,8 @@
       "message": "project description"
     },
     {
-      "type": "text",
-      "name": "foo"
-    },
-    {
       "type": "boolean",
       "name": "striate"
-    },
-    {
-      "type": "boolean",
-      "name": "folderIgnore"
     },
     {
       "type": "boolean",

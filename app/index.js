@@ -37,7 +37,12 @@ module.exports = class extends Generator {
       input.indexOf('generator-') !== 0 ? 'Must start with "generator-"' :
       true
 
-    this.answers = await this.prompt(this.yoginiFile.prompts)
+    const answers = await this.prompt(this.yoginiFile.prompts)
+
+    this.templateData = {
+      ...this.yoginiFile.data,
+      ...answers,
+    }
   }
 
   // Copies all files from the template directory to the destination path
@@ -51,13 +56,13 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       path.join(__dirname, '../create/{}package.json'),
       this.destinationPath('package.json'),
-      this.answers
+      this.templateData
     )
 
     this.fs.copyTpl(
       path.join(__dirname, '../create/README.md'),
       this.destinationPath('README.md'),
-      this.answers
+      this.templateData
     )
 
   }

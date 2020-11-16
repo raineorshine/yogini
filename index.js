@@ -57,7 +57,12 @@ module.exports = dirname => {
         return
       }
 
-      this.answers = await this.prompt(this.yoginiFile.prompts)
+      const answers = await this.prompt(this.yoginiFile.prompts)
+
+      this.templateData = {
+        ...this.yoginiFile.data,
+        ...answers,
+      }
     }
 
     // Copies all files from the template directory to the destination path
@@ -66,9 +71,9 @@ module.exports = dirname => {
 
       const doneOnce = once(this.async())
 
-      this.registerTransformStream(striate(this.answers))
+      this.registerTransformStream(striate(this.templateData))
 
-      prefixnote.parseFiles(this.templatePath(), this.answers)
+      prefixnote.parseFiles(this.templatePath(), this.templateData)
 
         // copy each file that is traversed
         .on('data', file => {
@@ -85,7 +90,7 @@ module.exports = dirname => {
 
             // copy the file with templating
             try {
-              this.fs.copyTpl(from, to, this.answers)
+              this.fs.copyTpl(from, to, this.templateData)
             }
             catch (e) {
               this.env.error(chalk.red(e))

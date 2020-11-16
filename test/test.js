@@ -97,6 +97,10 @@ describe('yogini', () => {
       ])
     })
 
+    it('passes extra data to templates', () => {
+      assert.fileContent('extraData.txt', 'extraData1: 1\nextraData2: 2')
+    })
+
   })
 
 })
