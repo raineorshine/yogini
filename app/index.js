@@ -118,6 +118,7 @@ module.exports = class extends Generator {
             '**/.DS_Store',
             '**/.git',
             '**/.git/**/*',
+            '**/package-lock.json',
             '**/node_modules',
             '**/node_modules/**/*',
             '**/test/**/*',
