@@ -18,9 +18,6 @@ describe('yogini', () => {
 
     it('copies files', () => {
       assert.file([
-        '.editorconfig',
-        '.gitignore',
-        '.gitattributes',
         'package.json',
         'README.md',
         'app',
