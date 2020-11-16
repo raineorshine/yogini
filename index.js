@@ -41,7 +41,6 @@ module.exports = dirname => {
           : require(path.resolve(dirname, 'yogini'))
       }
       catch (e) {
-        this.env.error(chalk.red('Invalid yogini file'))
         this.env.error(chalk.red(e))
       }
 
