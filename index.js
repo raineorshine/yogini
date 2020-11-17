@@ -16,49 +16,28 @@ const ignore = ['.DS_Store']
 
 const id = x => x
 
-// pass the directory of the caller so that we can look for the yogini file
-// cannot infer caller via require stack trace due to yeoman loader
-module.exports = dirname => {
+module.exports = config => {
 
   const Yogini = class extends Generator {
 
     constructor(args, opts) {
-
       super(args, opts)
-
-      this.yoginiFile = this.getYoginiFile()
-
-    }
-
-    /** Try loading the yogini file from various locations, parse, and report error messages if missing/invalid. */
-    getYoginiFile() {
-
-      let yoginiFile // eslint-disable-line fp/no-let
-
-      try {
-        yoginiFile = require(path.resolve(dirname, 'yogini'))
-      }
-      catch (e) {
-        this.env.error(chalk.red(e))
-      }
-
-      return yoginiFile
     }
 
     async prompting() {
 
-      if (!this.yoginiFile) return
+      if (!config) return
 
-      if (!this.yoginiFile.prompts?.length) {
-        this.log(chalk.yellow('No prompts in yogini.json. Proceeding with simple copy.'))
+      if (!config.prompts?.length) {
+        this.log(chalk.yellow('No prompts in config. Proceeding with simple copy.'))
         return
       }
 
-      const answers = await this.prompt(this.yoginiFile.prompts)
+      const answers = await this.prompt(config.prompts)
 
       this.templateData = {
-        ...this.yoginiFile.data,
-        ...(this.yoginiFile.parse ?? id)(answers),
+        ...config.data,
+        ...(config.parse ?? id)(answers),
       }
     }
 

@@ -1,1 +1,2 @@
-module.exports = require('../../index')(__dirname)
+const config = require('./yogini')
+module.exports = require('../../index')(config)
