@@ -108,6 +108,12 @@ describe('yogini', () => {
 
     assert.fileContent('foo.txt', 'foo: moo\nbar: moobar')
 
+    it('copies files with quotes', () => {
+      assert.file([
+        'quotes.txt'
+      ])
+    })
+
   })
 
 })

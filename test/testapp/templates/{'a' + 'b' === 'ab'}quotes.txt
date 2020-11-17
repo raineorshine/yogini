@@ -1,0 +1,3 @@
+This file uses an expression with quotes.
+
+this.fs.copy does not recognize it so we have to pass { ignoreNoMatch: true }
