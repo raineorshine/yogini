@@ -14,6 +14,8 @@ const once = require('once')
 // files that should never be copied
 const ignore = ['.DS_Store']
 
+const id = x => x
+
 // pass the directory of the caller so that we can look for the yogini file
 // cannot infer caller via require stack trace due to yeoman loader
 module.exports = dirname => {
@@ -60,7 +62,7 @@ module.exports = dirname => {
 
       this.templateData = {
         ...this.yoginiFile.data,
-        ...answers,
+        ...(this.yoginiFile.parse ?? id)(answers),
       }
     }
 

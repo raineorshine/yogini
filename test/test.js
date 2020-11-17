@@ -103,4 +103,19 @@ describe('yogini', () => {
 
   })
 
+  describe('parse', () => {
+
+    it('copies files', async () => {
+
+      await helpers.run(path.join(__dirname, 'parse'))
+        .withPrompts({
+          foo: 'moo',
+        })
+
+      assert.fileContent('foo.txt', 'foo: moo\nbar: moobar')
+
+    })
+
+  })
+
 })
