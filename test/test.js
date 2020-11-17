@@ -40,7 +40,6 @@ describe('yogini', () => {
 
     before(async () => {
       await helpers.run(path.join(__dirname, 'testapp'))
-        .withOptions({ test: true })
         .withPrompts({
           project: 'myproject',
           description: 'mydescription',

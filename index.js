@@ -26,8 +26,6 @@ module.exports = dirname => {
 
       super(args, opts)
 
-      this.option('test')
-
       this.yoginiFile = this.getYoginiFile()
 
     }
@@ -38,9 +36,7 @@ module.exports = dirname => {
       let yoginiFile // eslint-disable-line fp/no-let
 
       try {
-        yoginiFile = this.options.test
-          ? require('./test/testapp/yogini')
-          : require(path.resolve(dirname, 'yogini'))
+        yoginiFile = require(path.resolve(dirname, 'yogini'))
       }
       catch (e) {
         this.env.error(chalk.red(e))
