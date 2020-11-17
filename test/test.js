@@ -96,24 +96,16 @@ describe('yogini', () => {
       ])
     })
 
-    it('passes extra data to templates', () => {
-      assert.fileContent('extraData.txt', 'extraData1: 1\nextraData2: 2')
-    })
-
   })
 
-  describe('parse', () => {
+  it('parse', async () => {
 
-    it('copies files', async () => {
+    await helpers.run(path.join(__dirname, 'parse'))
+      .withPrompts({
+        foo: 'moo',
+      })
 
-      await helpers.run(path.join(__dirname, 'parse'))
-        .withPrompts({
-          foo: 'moo',
-        })
-
-      assert.fileContent('foo.txt', 'foo: moo\nbar: moobar')
-
-    })
+    assert.fileContent('foo.txt', 'foo: moo\nbar: moobar')
 
   })
 

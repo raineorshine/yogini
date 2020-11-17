@@ -35,10 +35,7 @@ module.exports = config => {
 
       const answers = await this.prompt(config.prompts)
 
-      this.templateData = {
-        ...config.data,
-        ...(config.parse ?? id)(answers),
-      }
+      this.templateData = (config.parse ?? id)(answers)
     }
 
     // Copies all files from the template directory to the destination path

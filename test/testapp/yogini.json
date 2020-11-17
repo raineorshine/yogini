@@ -1,8 +1,4 @@
 {
-  "data": {
-    "extraData1": 1,
-    "extraData2": 2
-  },
   "prompts": [
     {
       "type": "text",
