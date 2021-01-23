@@ -97,6 +97,12 @@ describe('yogini', () => {
       ])
     })
 
+    it('copies files with quotes in expressions', () => {
+      assert.file([
+        'quotes.txt'
+      ])
+    })
+
   })
 
   it('parse', async () => {
@@ -107,12 +113,6 @@ describe('yogini', () => {
       })
 
     assert.fileContent('foo.txt', 'foo: moo\nbar: moobar')
-
-    it('copies files with quotes', () => {
-      assert.file([
-        'quotes.txt'
-      ])
-    })
 
   })
 
