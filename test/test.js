@@ -40,14 +40,12 @@ describe('yogini', () => {
 
     before(async () => {
       await helpers.run(path.join(__dirname, 'testapp'))
+        // these keys must be defined in yogini.json or they will be silently ignored
         .withPrompts({
           project: 'myproject',
           description: 'mydescription',
-          striate: true,
-          folderIgnore: false,
-          folderInclude: true,
-          flatten: true,
-          isTrue: true,
+          t: true,
+          f: false,
         })
     })
 

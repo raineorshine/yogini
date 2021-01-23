@@ -1,5 +1,0 @@
-A
->> if(striate) {
-B
->> }
-C

@@ -12,15 +12,11 @@
     },
     {
       "type": "boolean",
-      "name": "striate"
+      "name": "t"
     },
     {
       "type": "boolean",
-      "name": "folderInclude"
-    },
-    {
-      "type": "boolean",
-      "name": "flatten"
+      "name": "f"
     }
   ]
 }
