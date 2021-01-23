@@ -8,9 +8,6 @@
   "license": "<%=license%>",
   "repository": "https://github.com/<%=username%>/<%=project%>",
   "author": "<%=username%>",
-  "engines": {
-    "node": ">10"
-  },
   "dependencies": {
     "generator-yogini": "<%=pkg.version%>"
   }
