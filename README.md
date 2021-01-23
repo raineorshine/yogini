@@ -1,5 +1,5 @@
 # yogini
-[![npm version](https://img.shields.io/npm/v/yogini.svg)](https://npmjs.org/package/yogini)
+[![npm version](https://img.shields.io/npm/v/generator-yogini.svg)](https://npmjs.org/package/generator-yogini)
 
 **yogini** is a prompt-driven scaffolding system. It makes it easy to create and maintain personal boilerplates that evolve over time.
 
