@@ -46,7 +46,8 @@ describe('yogini', () => {
           striate: true,
           folderIgnore: false,
           folderInclude: true,
-          flatten: true
+          flatten: true,
+          isTrue: true,
         })
     })
 
@@ -75,7 +76,9 @@ describe('yogini', () => {
         'folderIgnore',
         '{folderIgnore}',
         'folderIgnore/content.txt',
-        '{folderIgnore}/content.txt'
+        '{folderIgnore}/content.txt',
+        'isNotTrue.txt',
+        '{!isTrue}/isNotTrue.txt',
       ])
     })
 
