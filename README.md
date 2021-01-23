@@ -14,36 +14,43 @@ Generators created by yogini are [yeoman](http://yeoman.io/) generators, so they
 ## Install
 
 ```sh
-$ npm install -g yo                 # install yeoman
-$ npm install -g generator-yogini   # install yogini
+npm install -g yo                 # install yeoman
+npm install -g generator-yogini   # install yogini
 ```
 
-## Usage
+## Quick Start
 
 ### 1. Create your generator
 
 ```sh
-$ mkdir generator-mygen             # create a directory for your new generator
-$ cd generator-mygen            
-$ yo yogini                         # generate a blank yogini generator
-$ npm link                          # alias your generator to your globally
-                                    # installed npm modules so that you can run
-                                    # it with yeoman.
+mkdir generator-mygen             # create a directory for your new generator
+cd generator-mygen            
+yo yogini                         # generate a blank yogini generator
+npm link                          # alias your generator to your globally
+                                  # installed npm modules so that you can run
+                                  # it with yeoman.
 ```
 
-### 2. Customize your generator
-
-Configure prompts and add files (see below).
-
-### 3. Generate projects to your heart's content
+### 2. Use your generator
 
 ```sh
-$ yo mygen
+mkdir mygen1                      # create a directory for your new project
+cd mygen1
+yo mygen                          # generate a new project
 ```
 
-## Customizing your generator
+## Architecture
 
-An initial **yogini** generator just consists of a blank README, so you have to customize it to generate something useful. You can customize your **yogini** generator without writing any generator code:
+Would you like some generator with your generator? I know, it's a bit confusing. There are four levels to be aware of:
+
+- **yo** - Ye ol' scaffolding framework. Does all the hard work, like a good yeoman. Kind of a pain to work with as a developer.
+- **yogini** - Ye fancy `yo` wrapper that makes it easier to create, evolve, and maintain your generator.
+- **generator-mygen** - Your personal generator. Name it whatever you want. Typically you'll have a single generator and use its powerful conditional prompts to control which files are copied for the desired project type.
+- **mygen1** - A cute little offspring from `generator-mygen`. A fresh, new project!
+
+## Building your generator
+
+An initial **yogini** generator produces only a blank README, so you have to customize it to generate something useful.
 
 - Drop files into `app/templates`. All files from this directory will be copied into your project directory when you run the generator.
 - Edit the [Inquirer](https://github.com/SBoudrias/Inquirer.js) prompts in `app/yogini.json`. These will determine which files get copied (via [prefixnotes](https://github.com/raineorshine/prefixnote)) and what code gets copied (via [striate](https://github.com/raineorshine/striate)).
@@ -86,14 +93,12 @@ You can control which files in `/app/templates` get copied into your new project
 
 In the above example, the scripts folder will only be copied if `js` (as declared in yogini.json) is true, and the `styles` folder will only be copied if `css` is true.
 
-Some notes about file copying:
-
 - Empty expressions are a great way to include system and hidden files in your templates folder without them having an effect until they are copied:
   - `{}package.json`
   - `{}.gitignore`
 - If a folder name only consists of an expression, all files will be copied to the parent folder:
 
-  ```
+  ```sh
   main.js
   {js}
     ├── 1.js
@@ -103,16 +108,16 @@ Some notes about file copying:
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇨
 
-  ```
+  ```sh
   main.js
   1.js
   2.js
   3.js
   ```
 
-- Expressions can be any boolean Javascript statement:
+- Expressions can be any Javascript expression that evaluates to `boolean`:
 
-  ```
+  ```sh
   {js && gulp}gulpfile.js
   ```
 
