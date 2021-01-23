@@ -1,2 +1,2 @@
 const config = require('./yogini')
-module.exports = require('../../index')(config)
+module.exports = require('generator-yogini')(config)

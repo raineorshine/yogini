@@ -1,9 +1,3 @@
-/*
-This is the entrypoint for yogini baby generators. Like a baby consuming its mother... or something.
-
-For the entrypoint for running yogini itself as a generator (making babies), see app/index.js.
-*/
-
 const Generator = require('yeoman-generator')
 const path = require('path')
 const prefixnote = require('prefixnote')

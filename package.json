@@ -3,8 +3,10 @@
   "version": "1.5.1",
   "description": "Simple, prompt-driven scaffolding for continuously evolving boilerplates.",
   "files": [
-    "app"
+    "app",
+    "index.js"
   ],
+  "main": "index.js",
   "license": "ISC",
   "repository": "raineorshine/yogini",
   "author": {
@@ -31,7 +33,8 @@
     "chalk": "^4.1.0",
     "gulp-striate": "^1.0.2",
     "prefixnote": "^3.0.0",
-    "yeoman-generator": "^4.12.0"
+    "yeoman-generator": "^4.12.0",
+    "generator-yogini": "1.5.1"
   },
   "devDependencies": {
     "eslint": "^7.18.0",
