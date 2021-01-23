@@ -1,11 +1,12 @@
 /*
 This is the entrypoint for creating generators with generator-yogini.
 
-For the entrypoint for yogini baby generators, see app/index.js.
+For the entrypoint for yogini baby generators, see create/app/index.js.
 */
 
 const Generator = require('yeoman-generator')
 const path = require('path')
+const pkg = require('../package.json')
 
 module.exports = class extends Generator {
 
@@ -37,6 +38,7 @@ module.exports = class extends Generator {
     this.templateData = {
       ...this.yoginiFile.data,
       ...answers,
+      pkg,
     }
   }
 

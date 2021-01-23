@@ -12,6 +12,6 @@
     "node": ">10"
   },
   "dependencies": {
-    "generator-yogini": "^1.3.0"
+    "generator-yogini": "<%=pkg.version%>"
   }
 }
