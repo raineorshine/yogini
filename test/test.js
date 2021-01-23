@@ -97,6 +97,12 @@ describe('yogini', () => {
       ])
     })
 
+    it('copies files with quotes in expressions', () => {
+      assert.file([
+        'quotes.txt'
+      ])
+    })
+
   })
 
   it('parse', async () => {
