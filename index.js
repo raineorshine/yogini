@@ -14,28 +14,22 @@ const once = require('once')
 // files that should never be copied
 const ignore = ['.DS_Store']
 
-const id = x => x
-
 module.exports = config => {
 
   const Yogini = class extends Generator {
-
-    constructor(args, opts) {
-      super(args, opts)
-    }
 
     async prompting() {
 
       if (!config) return
 
-      if (!config.prompts?.length) {
+      if (!config.prompts && config.prompts.length) {
         this.log(chalk.yellow('No prompts in config. Proceeding with simple copy.'))
         return
       }
 
       const answers = await this.prompt(config.prompts)
 
-      this.templateData = (config.parse ?? id)(answers)
+      this.templateData = config.parse ? config.parse(answers) : answers
     }
 
     // Copies all files from the template directory to the destination path

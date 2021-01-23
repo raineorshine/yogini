@@ -6,11 +6,6 @@ For the entrypoint for yogini baby generators, see app/index.js.
 
 const Generator = require('yeoman-generator')
 const path = require('path')
-const prefixnote = require('prefixnote')
-const chalk = require('chalk')
-
-// files that should never be copied
-const ignore = ['.DS_Store']
 
 module.exports = class extends Generator {
 
