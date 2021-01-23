@@ -52,8 +52,12 @@ Would you like some generator with your generator? I know, it's a bit confusing.
 
 An initial **yogini** generator produces only a blank README, so you have to customize it to generate something useful.
 
+**TLDR;**
+
 - Drop files into `app/templates`. All files from this directory will be copied into your project directory when you run the generator.
 - Edit the [Inquirer](https://github.com/SBoudrias/Inquirer.js) prompts in `app/yogini.json`. These will determine which files get copied (via [prefixnotes](https://github.com/raineorshine/prefixnote)) and what code gets copied (via [striate](https://github.com/raineorshine/striate)).
+
+### 1. Yogini file
 
 Sample yogini.json file:
 
@@ -64,13 +68,11 @@ Sample yogini.json file:
       "type": "confirm",
       "name": "js",
       "message": "Does your project use Javascript?",
-      "store": true
     },
     {
       "type": "confirm",
       "name": "css",
       "message": "Does your project use css?",
-      "store": true
     }
   }
 }
@@ -78,7 +80,46 @@ Sample yogini.json file:
 
 The above yogini.json file would prompt you with two questions every time you run your generator and store the answers in `js` and `css` variables. These variables drive the main two aspects of scaffolding: file copying and templating.
 
-### 1. File Copying
+#### Advanced
+
+You can use a `yogini.js` file and define a `parse` function which allows you to transform or add to the user-provided answers to the prompts:
+
+```js
+module.exports = {
+
+  parse: (answers, prompts) => ({
+    authorName: 'Raine Revere',
+    authorUrl: 'https://github.com/raineorshine',
+    license: 'ISC',
+    username: 'raineorshine',
+    ...answers,
+    camelize,
+    prettyArray,
+  }),
+
+  prompts: [
+    ...
+  ]
+
+}
+```
+
+The prompts field also accepts a function which gets passed the generator instance:
+
+```js
+{
+  "prompts": ({ env }) => [
+    {
+      "type": "text",
+      "name": "directory",
+      "default": env.cwd
+    }
+  }
+}
+```
+
+
+### 2. File Copying
 
 You can control which files in `/app/templates` get copied into your new project by prefixing filenames with expressions that include prompt variables.
 
@@ -124,7 +165,7 @@ In the above example, the scripts folder will only be copied if `js` (as declare
 See [prefixnote](https://github.com/raineorshine/prefixnote) for the nitty-gritty.
 
 
-### 2. Templating
+### 3. Templating
 
 You can use [striate](https://github.com/raineorshine/striate), a superset of [ejs](https://github.com/mde/ejs), to control which code gets generated within the files. The answers given to the prompts in yogini.json are available as variables within the scope of your template files.
 

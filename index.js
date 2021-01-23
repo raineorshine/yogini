@@ -16,13 +16,20 @@ module.exports = config => {
 
       if (!config) return
 
-      if (!config.prompts && config.prompts.length) {
+      // accept an array of prompts or a function that returns an array of prompts
+      const prompts = typeof config.prompts === 'function'
+        ? config.prompts(this)
+        : config.prompts
+
+      if (!prompts && prompts.length) {
         this.log(chalk.yellow('No prompts in config. Proceeding with simple copy.'))
         return
       }
 
-      const answers = await this.prompt(config.prompts)
+      const answers = await this.prompt(prompts)
 
+      // transform the answers with the parse function if it exists
+      // otherwise add to this.templateData as-is
       this.templateData = config.parse ? config.parse(answers) : answers
     }
 

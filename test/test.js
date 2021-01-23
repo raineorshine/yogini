@@ -116,4 +116,15 @@ describe('yogini', () => {
 
   })
 
+  it('prompts function', async () => {
+
+    await helpers.run(path.join(__dirname, 'prompts-function'))
+      .withPrompts({
+        foo: 'moo',
+      })
+
+    assert.fileContent('foo.txt', 'foo: moo')
+
+  })
+
 })
