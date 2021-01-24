@@ -52,18 +52,17 @@ module.exports = config => {
           const filename = path.basename(file.original)
 
           // always ignore files like .DS_Store
-          if (ignore.indexOf(filename) === -1) {
-            const from = file.original
-            const to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
+          if (ignore.includes(filename)) return
+          const from = file.original
+          const to = this.destinationPath(path.relative(this.templatePath(), file.parsed))
 
-            // copy the file with templating
-            try {
-              this.fs.copyTpl(from, to, this.templateData)
-            }
-            catch (e) {
-              this.env.error(chalk.red(e))
-              doneOnce(e)
-            }
+          // copy the file with templating
+          try {
+            this.fs.copyTpl(from, to, this.templateData)
+          }
+          catch (e) {
+            this.env.error(chalk.red(e))
+            doneOnce(e)
           }
         })
 
