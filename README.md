@@ -5,11 +5,11 @@
 
 What makes **yogini** different?
 
-- Prompt-driven (via [Inquirer](https://github.com/SBoudrias/Inquirer.js)) with [easy prompt configuration](https://github.com/raineorshine/yogini/blob/master/app/yogini.json)
-- Embedded file-copying logic, e.g. `{useSass}main.scss`
+- Prompt-driven (via [Inquirer](https://github.com/SBoudrias/Inquirer.js)) with simple, declarative prompt configuration ([example](https://github.com/raineorshine/yogini/blob/master/app/yogini.json))
+- Embedded file-copying logic (via [prefixnotes](https://github.com/raineorshine/prefixnote)), e.g. `{useSass}main.scss`
 - Templating with [striate](https://github.com/raineorshine/striate), a superset of [ejs](https://github.com/mde/ejs) with better handling of multi-line blocks
 
-Generators created by yogini are [yeoman](http://yeoman.io/) generators, so they can be published and consumed them like any other yeoman generator. You do not need to understand yeoman to use yogini.
+Generators created by yogini are [yeoman](http://yeoman.io/) generators, so they can be published and consumed like any other yeoman generator. You do not need to understand yeoman to use yogini.
 
 ## Install
 
@@ -41,7 +41,9 @@ yo mygen                          # generate a new project
 
 ## Architecture
 
-Would you like some generator with your generator? I know, it's a bit confusing. There are four levels to be aware of:
+*Would you like some generator with your generator?* 
+
+**yogini** features a 4-level architecture:
 
 - **yo** - Ye ol' scaffolding framework. Does all the hard work, like a good yeoman. Kind of a pain to work with as a developer.
 - **yogini** - Ye fancy `yo` wrapper that makes it easier to create, evolve, and maintain your generator.
@@ -167,7 +169,7 @@ See [prefixnote](https://github.com/raineorshine/prefixnote) for the nitty-gritt
 
 ### 3. Templating
 
-You can use [striate](https://github.com/raineorshine/striate), a superset of [ejs](https://github.com/mde/ejs), to control which code gets generated within the files. The answers given to the prompts in yogini.json are available as variables within the scope of your template files.
+**yogini** uses [striate](https://github.com/raineorshine/striate), a superset of [ejs](https://github.com/mde/ejs), to control which code gets generated within the files. The answers given to the prompts in yogini.json are available as variables within the scope of your template files.
 
 ```html
 <!DOCTYPE html>
